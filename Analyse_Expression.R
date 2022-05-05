@@ -42,7 +42,7 @@ library(dplyr)
 expression_data_file <- "sample_data/data_all.csv"
 gene_annotation_file <- "sample_data/gene_annotation.csv"
 sample_annotation_file <- "sample_data/sample_annotation.csv"
-gene_list_file <- "sample_data/genelist_B111679.txt"
+gene_list_file <- "sample_data/genelist.txt"
 
 ########
 # make sure all these files above exist in a loop
@@ -139,6 +139,7 @@ genelist <- genelist[!duplicated(genelist)]
 
 # get matrix of only gene expression data we want using genelist
 keep_data <- data_matrix[genelist, ]
+keep_data
 
 # turn into dataframe for merging with gene annotation data
 keep_data <- as.data.frame(keep_data)
@@ -186,22 +187,22 @@ sample_annot$Treatment <- as.character(sample_annot$Treatment)
 
 # check that the X column with gene number exists in both expression data
 # and gene annotation data before merging
-gene_column_check <- assert_that("X" %in% names(gene_annot),
-                                 msg = paste("No gene ID column 'X' found in supplied gene annotation file '",
+gene_column_check <- assert_that("Gene" %in% names(gene_annot),
+                                 msg = paste("No gene ID column 'Gene' found in supplied gene annotation file '",
                                              gene_annotation_file,
                                              "'",
                                              sep = "")
 )
 
-keep_column_check <- assert_that("X" %in% names(keep_data),
-                                 msg = paste("No gene ID column 'X' found in supplied gene expression file '",
+keep_column_check <- assert_that("Gene" %in% names(keep_data),
+                                 msg = paste("No gene ID column 'Gene' found in supplied gene expression file '",
                                              expression_data_file,
                                              "'",
                                              sep = "")
 )
 
 # merge the gene annotation dataframe with the gene expression dataframe
-keep_data_info <- merge(keep_data, gene_annot, by = "X")
+keep_data_info <- merge(keep_data, gene_annot, by = "Gene")
 
 # check that no columns have been lost from the expression data due to the merge
 all_data_kept_check <- assert_that(length(rownames(keep_data_info)) == length(rownames(keep_data)),
@@ -293,7 +294,7 @@ pheatmap(plotting_matrix,
   main = "Log2 Row-wise Expression Level Clustered By Gene",
   fontsize_col = 12,
   angle_col = 45,
-  filename = 'output/B111679_Log2_Row-wise_Expression_Level_Clustered_By_Gene.png',
+  filename = 'output/Log2_Row-wise_Expression_Level_Clustered_By_Gene.png',
 )
 
 # heatmap two with genes and samples clustered
@@ -312,7 +313,7 @@ pheatmap(plotting_matrix,
   fontsize_col = 12,
   angle_col = 45,
   cutree_cols = 4,
-  filename = 'output/B111679_Log2_Row-wise_Expression_Level_Clustered_By_Gene_and_Sample.png'
+  filename = 'output/Log2_Row-wise_Expression_Level_Clustered_By_Gene_and_Sample.png'
 )
 
 print("Analysis Finished! Heatmaps saved to output/ dir")
