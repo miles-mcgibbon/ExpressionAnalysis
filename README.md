@@ -46,12 +46,12 @@ This repo contains an R pipeline to plot clustered heatmaps from gene expression
 
 The pipeline will take the expression data for the supplied genes of interest and produce two heatmaps detailing expresssion level, gene names, treatments and gene types. One is clustered by each gene and sample:
 
-![]('sample_output/Log2_Row-wise_Expression_Level_Clustered_By_Gene_and_Sample.png')
+![](sample_output/Log2_Row-wise_Expression_Level_Clustered_By_Gene_and_Sample.png)
 
 
 The other is clustered only by gene:
 
-![]('Log2_Row-wise_Expression_Level_Clustered_By_Gene.png')
+![](sample_output/Log2_Row-wise_Expression_Level_Clustered_By_Gene.png)
 
 ### Markdown Report
 
